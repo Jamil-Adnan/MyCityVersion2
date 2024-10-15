@@ -48,7 +48,7 @@ namespace MyCityVersion2
             return Society;
             
         }
-        public static char [,] EmptyMap(char[,] map)
+        public static void EmptyMap(char[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
@@ -57,7 +57,7 @@ namespace MyCityVersion2
                     map[i, j] = ' ';
                 }
             }
-            return map;
+            //return map;
         }
     }
     

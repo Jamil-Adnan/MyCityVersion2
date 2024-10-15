@@ -21,7 +21,7 @@ namespace MyCityVersion2
                     person.PersonMove(width, height);
                 }
                 DisplayCity(Society);               
-              
+                
             }
         }
         
@@ -44,7 +44,7 @@ namespace MyCityVersion2
                     //Console.Write(map[i, j] == '\0' ? '.' : map[i, j]); 
                     
                     Console.Write(map[i, j]);
-                    //char[,]map = City.EmptyMap(map);
+                    City.EmptyMap(map);
                 }
                 Console.WriteLine();
                
