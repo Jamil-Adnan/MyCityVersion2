@@ -57,7 +57,7 @@ namespace MyCityVersion2
                     map[i, j] = ' ';
                 }
             }
-            //return map;
+            
         }
     }
     
