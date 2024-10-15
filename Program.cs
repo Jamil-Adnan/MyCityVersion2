@@ -5,24 +5,24 @@ namespace MyCityVersion2
 {
     internal class Program
     {        
-        static int height = 25;
-        static int width = 100;
+        static int row = 25;
+        static int col = 100;
         static int policeman = 10;
         static int thiefman = 5;
         static int citizenman = 15;
-        static char[,] map = new char[height, width];
+        //
         static void Main(string[] args)
         {
             List<Person> Society = new List<Person> ();
-            City.AddPerson(Society, policeman, thiefman, citizenman, map);
+            City.AddPerson(Society, policeman, thiefman, citizenman);
             
             while (true) 
             {
                 foreach (Person person in Society)
                 {
-                    person.PersonMove(width, height);
+                    person.PersonMove(row, col);
                 }
-                City.DisplayCity(Society, map);               
+                City.DisplayCity(Society, row, col);               
                 
             }
         }

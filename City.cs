@@ -8,7 +8,7 @@ namespace MyCityVersion2
 {
     internal class City
     {
-        public static void AddPerson(List<Person> Society, int policeman, int thiefman, int citizenman, char [,] map)
+        public static void AddPerson(List<Person> Society, int policeman, int thiefman, int citizenman)
         {
             for (int i = 0; i < policeman; i++)
             {
@@ -39,8 +39,10 @@ namespace MyCityVersion2
             } 
         }
 
-        public static void DisplayCity(List<Person> Society, char[,] map)
+        public static void DisplayCity(List<Person> Society, int row, int col)
         {
+            char[,] map = new char[row, col];
+
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
