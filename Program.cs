@@ -13,43 +13,22 @@ namespace MyCityVersion2
         static char[,] map = new char[height, width];
         static void Main(string[] args)
         {
-            List<Person> Society = City.CityMap(policeman, thiefman, citizenman, map);
+            List<Person> Society = new List<Person> ();
+            City.AddPerson(Society, policeman, thiefman, citizenman, map);
+            
             while (true) 
             {
                 foreach (Person person in Society)
                 {
                     person.PersonMove(width, height);
                 }
-                DisplayCity(Society);               
+                City.DisplayCity(Society, map);               
                 
             }
         }
         
         
         
-        static void DisplayCity(List<Person> Society)
-        {
-            foreach (Person person in Society)
-            {
-                if (person is Police) map[person.Personx, person.Persony] = 'P';
-                else if (person is Thief) map[person.Personx, person.Persony] = 'T';
-                else if (person is Citizen) map[person.Personx, person.Persony] = 'M';
-            }
-            Console.Clear();
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-
-                    //Console.Write(map[i, j] == '\0' ? '.' : map[i, j]); 
-                    
-                    Console.Write(map[i, j]);
-                    City.EmptyMap(map);
-                }
-                Console.WriteLine();
-               
-            }
-            //Console.Clear();
-        }
+        
     }    
 }

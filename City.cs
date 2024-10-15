@@ -8,16 +8,8 @@ namespace MyCityVersion2
 {
     internal class City
     {
-        public static List <Person> CityMap(int policeman, int thiefman, int citizenman, char[,] map)
-        {            
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    map[i, j] = '.';
-                }
-            }
-            List<Person> Society = new List<Person>();
+        public static void AddPerson(List<Person> Society, int policeman, int thiefman, int citizenman, char [,] map)
+        {
             for (int i = 0; i < policeman; i++)
             {
                 int persX = Random.Shared.Next(1, 25);
@@ -44,21 +36,39 @@ namespace MyCityVersion2
                 int Xdir = Random.Shared.Next(-1, 2);
                 int Ydir = Random.Shared.Next(-1, 2);
                 Society.Add(new Citizen(persX, persY, Xdir, Ydir));               
-            }
-            return Society;
-            
+            } 
         }
-        public static void EmptyMap(char[,] map)
+
+        public static void DisplayCity(List<Person> Society, char[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    map[i, j] = ' ';
+                    map[i, j] = '.';
                 }
             }
-            
+            foreach (Person person in Society)
+            {
+                if (person is Police) map[person.Personx, person.Persony] = 'P';
+                else if (person is Thief) map[person.Personx, person.Persony] = 'T';
+                else if (person is Citizen) map[person.Personx, person.Persony] = 'M';
+            }
+            Console.Clear();
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    Console.Write(map[i, j]);                       
+                }
+                Console.WriteLine();
+            }
+            //Console.Clear();
         }
+
+        /* */
+
+
     }
     
 }
