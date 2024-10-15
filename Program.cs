@@ -20,7 +20,7 @@ namespace MyCityVersion2
             {
                 foreach (Person person in Society)
                 {
-                    person.PersonMove(row, col);
+                    person.PersonMove(col, row);
                 }
                 City.DisplayCity(Society, row, col);               
                 

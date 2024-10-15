@@ -20,6 +20,32 @@ namespace MyCityVersion2
             Xdirection = xdirection;
             Ydirection = ydirection;
             //Inventory = Goods.GoodsList();
+            SetDirection();
+        }
+        public void SetDirection() 
+        {
+            var direction = Random.Shared.Next(0,6);
+            switch (direction) 
+            {
+                case 0:
+                    Xdirection = -1;  Ydirection = 0;   //left
+                    break;
+                case 1:
+                    Xdirection = 1; Ydirection = 0; //right
+                    break;
+                case 2:
+                    Xdirection = 0; Ydirection = 1; //up
+                    break;
+                case 3:
+                    Xdirection = 0; Ydirection = -1;    //down
+                    break;
+                case 4:
+                    Xdirection = -1; Ydirection= 1;    //diagonal left
+                    break;
+                case 5:
+                    Xdirection = 1; Ydirection= -1;    //diagonal right
+                    break;
+            }
         }
         public void PersonMove(int height, int width)
         {
