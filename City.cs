@@ -8,7 +8,7 @@ namespace MyCityVersion2
 {
     internal class City
     {
-        public static void AddPerson(List<Person> Society, int policeman, int thiefman, int citizenman)
+        public static void AddPerson(List<Person> Society, List <Police>policeList, List <Thief>thiefList, List <Citizen>citizenList, int policeman, int thiefman, int citizenman)
         {
             for (int i = 0; i < policeman; i++)
             {
@@ -18,6 +18,7 @@ namespace MyCityVersion2
                 int Ydir = Random.Shared.Next(-1, 2);
                 
                 Society.Add(new Police(persX, persY, Xdir, Ydir));
+                policeList.Add(new Police(persX, persY,Xdir,Ydir));
             }
 
             for (int i = 0; i < thiefman; i++)
@@ -27,6 +28,7 @@ namespace MyCityVersion2
                 int Xdir = Random.Shared.Next(-1, 2);
                 int Ydir = Random.Shared.Next(-1, 2);
                 Society.Add(new Thief(persX, persY, Xdir, Ydir));
+                thiefList.Add(new Thief(persX, persY, Xdir, Ydir));
             }
 
             for (int i = 0; i < citizenman; i++)
@@ -35,7 +37,8 @@ namespace MyCityVersion2
                 int persY = Random.Shared.Next(1, 100);
                 int Xdir = Random.Shared.Next(-1, 2);
                 int Ydir = Random.Shared.Next(-1, 2);
-                Society.Add(new Citizen(persX, persY, Xdir, Ydir));               
+                Society.Add(new Citizen(persX, persY, Xdir, Ydir));
+                citizenList.Add(new Citizen(persX, persY, Xdir, Ydir));
             } 
         }
 
@@ -66,11 +69,11 @@ namespace MyCityVersion2
                 }
                 Console.WriteLine();
             }
-            //Console.Clear();
+            Console.Clear();
         }
 
-        /* */
-
+        /*
+        */
 
     }
     
