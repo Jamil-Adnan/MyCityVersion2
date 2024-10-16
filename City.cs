@@ -47,9 +47,10 @@ namespace MyCityVersion2
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    map[i, j] = '.';
+                    map[i, j] = ' ';
                 }
             }
+            
             foreach (Person person in Society)
             {
                 if (person is Police) map[person.Personx, person.Persony] = 'P';

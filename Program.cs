@@ -10,10 +10,12 @@ namespace MyCityVersion2
         static int policeman = 10;
         static int thiefman = 5;
         static int citizenman = 15;
-        //
+        static List<Person> Society = new List<Person>();
+        static List <Police> police = new List<Police>();
+        static List <Thief>thief = new List<Thief>();
+        static List <Citizen> citizen = new List<Citizen>();
         static void Main(string[] args)
-        {
-            List<Person> Society = new List<Person> ();
+        {            
             City.AddPerson(Society, policeman, thiefman, citizenman);
             
             while (true) 
