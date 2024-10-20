@@ -12,14 +12,14 @@ namespace MyCityVersion2
         public int Persony { get; set; }
         public int Xdirection { get; set; }
         public int Ydirection { get; set; }
-        public List<Goods> Inventory { get; set; }
+        //public List<string> Goods { get; set; }
         public Person(int xdirection, int ydirection, int personx, int persony)
         {
             Personx = personx;
             Persony = persony;
             Xdirection = xdirection;
             Ydirection = ydirection;
-            //Inventory = Goods.GoodsList();
+            //Goods = new List<string>();
             SetDirection();
         }
         public void SetDirection() 
@@ -67,39 +67,70 @@ namespace MyCityVersion2
             {
                 Persony = height - 1;
             }
-        }        
+        }
+        public virtual void ArrestThief(Thief thief) 
+        {
+        }
+        public virtual void Hijack(Citizen citizen) 
+        {
+        }
     }
+    
 
     class Police : Person
     {
-        public List<Goods> PoliceInventory { get; set; }
+        public List<string> RecoveredGoods { get; set; }
 
-        public Police(int personx, int persony, int xdirection, int ydirection) : base(xdirection, ydirection, personx, persony)
+        public Police(int personx, int persony, int xdirection, int ydirection, List<string> recoveredgoods) : base(xdirection, ydirection, personx, persony)
         {
-            PoliceInventory = new List<Goods>();
-            
-        }      
+            RecoveredGoods = recoveredgoods;            
+        }
+
+        public override void ArrestThief(Thief thief) 
+        {
+            if (thief.HijackedGoods.Count > 0) 
+            {
+                RecoveredGoods.AddRange(thief.HijackedGoods);
+                thief.HijackedGoods.Clear();
+                Console.WriteLine($"Headline!!   Gotham City Police just arrested a thief and recovered many expensive items");
+                Thread.Sleep(2000);
+            }
+        }
     }
 
 
     class Thief : Person
     {
-        public List<Goods> Thiefinventory { get; set; }
+        public List<string> HijackedGoods { get; set; }
 
-        public Thief(int personx, int persony, int xdirection, int ydirection) : base(xdirection, ydirection, personx, persony)
+        public Thief(int personx, int persony, int xdirection, int ydirection, List <string> hijackedgoods) : base(xdirection, ydirection, personx, persony)
         {
-            Thiefinventory = new List<Goods>();
-        }        
+            HijackedGoods = hijackedgoods;
+        }
+        public override void Hijack(Citizen citizen) 
+        {
+            if (citizen.Inventory.Count > 0) 
+            {
+                Random rnd = new Random();
+                int thing = rnd.Next(citizen.Inventory.Count);
+                string loots = citizen.Inventory[thing];
+                citizen.Inventory.RemoveAt(thing);
+                HijackedGoods.Add(loots);
+                Console.WriteLine($"Oh No!!!   A thief just stole a {loots} from a citizen!");
+                Thread.Sleep(2000);
+
+            }
+        }
     }
 
     class Citizen : Person
     {
-        public List<Goods> CitizenInventory { get; set; }
-
-        public Citizen(int personx, int persony, int xdirection, int ydirection) : base(xdirection, ydirection, personx, persony)
+        public List<string> Inventory { get; set; }
+        public Citizen(int personx, int persony, int xdirection, int ydirection, List <string> inventory) : base(xdirection, ydirection, personx, persony)
         {
-            CitizenInventory = new List<Goods>();  
-            
+            Inventory = inventory;
+            string[] inventory2 = { "Keys", "Mobile", "Money", "Watch" };
+            Inventory.AddRange(inventory2.ToList());
         }
         
     }
