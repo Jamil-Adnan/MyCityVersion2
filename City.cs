@@ -8,7 +8,7 @@ namespace MyCityVersion2
 {
     internal class City
     {
-        public static void AddPerson(List<Person> Society, List <Police>policeList, List <Thief>thiefList, List <Citizen>citizenList, int policeman, int thiefman, int citizenman)
+        public static List<Person> AddPerson(int policeman, int thiefman, int citizenman, List<Person> peopleList)
         {
             for (int i = 0; i < policeman; i++)
             {
@@ -17,8 +17,7 @@ namespace MyCityVersion2
                 int Xdir = Random.Shared.Next(-1, 2);
                 int Ydir = Random.Shared.Next(-1, 2);
                 List<string> recoveredGoods = new List<string>();
-                Society.Add(new Police(persX, persY, Xdir, Ydir, recoveredGoods));
-                policeList.Add(new Police(persX, persY,Xdir,Ydir, recoveredGoods));
+                peopleList.Add(new Police(persX, persY, Xdir, Ydir, recoveredGoods));
             }
 
             for (int i = 0; i < thiefman; i++)
@@ -27,9 +26,8 @@ namespace MyCityVersion2
                 int persY = Random.Shared.Next(1, 100);
                 int Xdir = Random.Shared.Next(-1, 2);
                 int Ydir = Random.Shared.Next(-1, 2);
-                List <string>hijackedgoods = new List<string>();
-                Society.Add(new Thief(persX, persY, Xdir, Ydir, hijackedgoods));
-                thiefList.Add(new Thief(persX, persY, Xdir, Ydir, hijackedgoods));
+                List<string> hijackedgoods = new List<string>();
+                peopleList.Add(new Thief(persX, persY, Xdir, Ydir, hijackedgoods));
             }
 
             for (int i = 0; i < citizenman; i++)
@@ -39,47 +37,33 @@ namespace MyCityVersion2
                 int Xdir = Random.Shared.Next(-1, 2);
                 int Ydir = Random.Shared.Next(-1, 2);
                 List<string> inventory = new List<string>();
-                Society.Add(new Citizen(persX, persY, Xdir, Ydir, inventory));
-                citizenList.Add(new Citizen(persX, persY, Xdir, Ydir, inventory));
-            } 
+                peopleList.Add(new Citizen(persX, persY, Xdir, Ydir, inventory));
+            }
+            return peopleList;
         }
 
-        public static void DisplayCity(List<Person> Society, int row, int col, int totalHijacked, int totalArrested)
+        public static void DisplayCity(int height, int width, List<Person> Society)
         {
-            char[,] map = new char[row, col];
-
-            /*for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    map[i, j] = ' ';
-                }
-            }*/
-            
+            char[,] map = new char[height, width];
             foreach (Person person in Society)
             {
                 if (person is Police) map[person.Personx, person.Persony] = 'P';
                 else if (person is Thief) map[person.Personx, person.Persony] = 'T';
                 else if (person is Citizen) map[person.Personx, person.Persony] = 'M';
             }
-            Console.Clear();
-            for (int i = 0; i < map.GetLength(0); i++)
+
+            for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {                    
-                    Console.Write(map[i, j] == '\0' ? '.' : map[i, j]);
+                for (int j = 0; j < width; j++)
+                {
+                    Console.Write(map[i, j] == '\0' ? ' ' : map[i, j]);
 
-                }
-                Console.WriteLine();
+                }                
+                Console.WriteLine();                
             }
-            
-            Console.WriteLine($"Number of total hijacked citizens : {totalHijacked}");
-            Console.WriteLine($"Number of total arrested thieves : {totalArrested}");
-            Thread.Sleep(2000);
+            Thread.Sleep(200); 
+            Console.Clear();
+
         }
-
-        
-
     }
-    
 }

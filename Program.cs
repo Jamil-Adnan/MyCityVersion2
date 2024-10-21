@@ -4,75 +4,63 @@ using System.Net.Sockets;
 namespace MyCityVersion2
 {
     internal class Program
-    {        
-        static int row = 25;
-        static int col = 100;
+    {
+        static int height = 25;
+        static int width = 100;
         static int policeman = 20;
-        static int thiefman = 30;
-        static int citizenman = 35;
+        static int thiefman = 35;
+        static int citizenman = 50;
         static int totalHijacked = 0;
         static int totalArrested = 0;
-        static List<Person> Society = new List<Person>();
-        static List <Police> policeList = new List<Police>();
-        static List <Thief>thiefList = new List<Thief>();
-        static List <Citizen> citizenList = new List<Citizen>();
+        static char[,] map = new char[height, width];
+        static List<Person> peopleList = new List<Person>();
         static void Main(string[] args)
-        {            
-            City.AddPerson(Society, policeList, thiefList, citizenList, policeman, thiefman, citizenman);
-            
-            while (true) 
+        {
+            List<Person> Society = City.AddPerson(policeman, thiefman, citizenman, peopleList);
+            while (true)
             {
                 foreach (Person person in Society)
                 {
-                    person.PersonMove(col, row);
+                    person.PersonMove(width, height);
                 }
-                Meeting();
-                City.DisplayCity(Society, row, col, totalHijacked, totalArrested);
-                Console.WriteLine($"Number of total hijacked citizens : {totalHijacked}");
-                Console.WriteLine($"Number of total arrested thieves : {totalArrested}");
-                Thread.Sleep(2000);
+                Meeting(Society);
+                City.DisplayCity(height, width, Society);
+                Console.WriteLine("Number of hijacked citizens: " + totalHijacked);
+                Console.WriteLine("Number of arrested thieves is: " + totalArrested);
+                Thread.Sleep(500);
             }
-
-            //Console.WriteLine("Total arrested: " + totalArrested);
-            //Console.WriteLine("Total Hijacked: " + totalHijacked);
-            //Console.WriteLine("number of thieves:" + thiefman );
         }
-        public static void Meeting()
+        static void Meeting(List<Person> Society)
         {
-            foreach (Police police in policeList) 
+            for (int i = 0; i < Society.Count; i++)
             {
-                foreach (Thief thief in thiefList) 
+                for (int j = 0; j < Society.Count; j++)
                 {
-                    if (police.Personx == thief.Personx && police.Persony == thief.Persony) 
+                    if (Society[i].Personx == Society[j].Personx && Society[i].Persony == Society[j].Persony)
                     {
-                        police.ArrestThief(thief); //ArrestThief method needs to be done
-                        //Console.WriteLine("one thief arrested");
-                        Thread.Sleep(2000);
-                        totalArrested += 1;
-                        //thiefman -= 1;
-                        
-                    }
-                } 
-            }
-            
-            foreach (Thief thief in thiefList)
-            {
-                foreach (Citizen citizen in citizenList)
-                {
-                    if (thief.Personx == citizen.Personx && thief.Persony == citizen.Persony)
-                    {
-                        thief.Hijack(citizen); //hijack method needs to be completed
-                        Console.WriteLine("An innocent citizen has been hijacked.");
-                        totalHijacked += 1;
-                        Thread.Sleep(2000);
+                        if (Society[i] is Thief && Society[j] is Citizen)
+                        {
+                            ((Thief)Society[i]).Hijack((Citizen)Society[j]);
+                            totalHijacked++;
+                        }
+                        else if (Society[i] is Citizen && Society[j] is Thief)
+                        {
+                            ((Thief)Society[j]).Hijack((Citizen)Society[i]);
+                            totalHijacked++;
+                        }
+                        else if (Society[i] is Police && Society[j] is Thief)
+                        {
+                            ((Police)Society[i]).Arrest((Thief)Society[j]);
+                            totalArrested++;
+                        }
+                        else if (Society[i] is Thief && Society[j] is Police)
+                        {
+                            ((Police)Society[j]).Arrest((Thief)Society[i]);
+                            totalArrested++;
+                        }
                     }
                 }
             }
-            
-
         }
-
-
-
-    }    
+    }
 }
