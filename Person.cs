@@ -13,7 +13,7 @@ namespace MyCityVersion2
         public int Xdirection { get; set; }
         public int Ydirection { get; set; }
         public List<string> Inventory { get; set; }
-        public Person(int xdirection, int ydirection, int personx, int persony)
+        public Person(int xdirection, int ydirection, int personx, int persony)     //declaring an object in person class
         {
             Personx = personx;
             Persony = persony;
@@ -22,7 +22,7 @@ namespace MyCityVersion2
             //Inventory = Goods.GoodsList();
             SetDirection();
         }
-        public void PersonMove(int height, int width)
+        public void PersonMove(int height, int width)       //method for person movement
         {
             Personx += Xdirection;
             Persony += Ydirection;
@@ -44,7 +44,7 @@ namespace MyCityVersion2
             }
         }
 
-        public void SetDirection()
+        public void SetDirection()      //method for limiting movements in 6 directions
         {
             var direction = Random.Shared.Next(0, 6);
             switch (direction)
@@ -71,42 +71,43 @@ namespace MyCityVersion2
         }
     }
 
-    class Police : Person
+    class Police : Person       //subclass Police
     {
-        public List<string> RecoveredGoods { get; set; }
+        public List<string> RecoveredGoods { get; set; }    //police inventory
 
         public Police(int personx, int persony, int xdirection, int ydirection, List<string> recoveredgoods) : base(xdirection, ydirection, personx, persony)
         {
             RecoveredGoods = recoveredgoods;
         }
 
-        public void Arrest(Thief thief)
+        public void Arrest(Thief thief, List<Person>society)     //method for interaction between police and thief
         {
             if (thief.HijackedGoods.Count >= 0)
             {
                 RecoveredGoods.AddRange(thief.HijackedGoods);
                 thief.HijackedGoods.Clear();
+                society.Remove(thief);
                 Console.WriteLine("Breaking News!!!   Gotham City Police just arrested a thief and recovered many expensive goods");
                 Thread.Sleep(2000);
             }
         }
     }
 
-    class Thief : Person
+    class Thief : Person        //subclass Thief
     {
-        public List<string> HijackedGoods { get; set; }
+        public List<string> HijackedGoods { get; set; } //thief inventory
 
         public Thief(int personx, int persony, int xdirection, int ydirection, List<string> hijackedgoods) : base(xdirection, ydirection, personx, persony)
         {
             HijackedGoods = hijackedgoods;
         }
 
-        public void Hijack(Citizen citizen)
+        public void Rob(Citizen citizen)     //method for interaction between thief and citizen
         {
             if (citizen.Inventory.Count > 0)
             {
-                Random rnd = new Random();
-                int thing = rnd.Next(citizen.Inventory.Count);
+                //Random rnd = new Random();
+                int thing = Random.Shared.Next(citizen.Inventory.Count);
                 string loots = citizen.Inventory[thing];
                 citizen.Inventory.RemoveAt(thing);
                 HijackedGoods.Add(loots);
@@ -117,9 +118,9 @@ namespace MyCityVersion2
         }
     }
 
-    class Citizen : Person
+    class Citizen : Person      //subclass Citizen
     {
-        public List<string> Inventory { get; set; }
+        public List<string> Inventory { get; set; } //citizen inventory
         public Citizen(int personx, int persony, int xdirection, int ydirection, List<string> inventory) : base(xdirection, ydirection, personx, persony)
         {
             Inventory = inventory;
