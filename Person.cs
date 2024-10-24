@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyCityVersion2
 {
-    internal class Person
+    public class Person
     {
         public int Personx { get; set; }
         public int Persony { get; set; }
@@ -80,16 +80,23 @@ namespace MyCityVersion2
             RecoveredGoods = recoveredgoods;
         }
 
-        public void Arrest(Thief thief, List<Person>society)     //method for interaction between police and thief
+        public int Arrest(Thief thief, List<Person>society, int totalArrested)     //method for interaction between police and thief
         {
-            if (thief.HijackedGoods.Count >= 0)
+            
+            if (thief.HijackedGoods.Count > 0)
             {
                 RecoveredGoods.AddRange(thief.HijackedGoods);
                 thief.HijackedGoods.Clear();
                 society.Remove(thief);
-                Console.WriteLine("Breaking News!!!   Gotham City Police just arrested a thief and recovered many expensive goods");
+                Console.WriteLine($"Breaking News!!!   Gotham City Police just arrested a thief and recovered: {string.Join(", ", RecoveredGoods)} ");
+                totalArrested++;
                 Thread.Sleep(2000);
             }
+            else 
+            {
+               //Console.WriteLine();               
+            }
+            return totalArrested;
         }
     }
 
@@ -111,9 +118,8 @@ namespace MyCityVersion2
                 string loots = citizen.Inventory[thing];
                 citizen.Inventory.RemoveAt(thing);
                 HijackedGoods.Add(loots);
-                Console.WriteLine($"Oh No!!!   A thief just stole a {loots} from a citizen!");
+                Console.WriteLine($"Oh No!!!   A thief just stole {loots} from a citizen!");
                 Thread.Sleep(500);
-
             }
         }
     }

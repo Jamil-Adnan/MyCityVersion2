@@ -42,7 +42,7 @@ namespace MyCityVersion2
             return peopleList;
         }
 
-        public static void DisplayCity(int height, int width, List<Person> Society)
+        public static void DisplayCity(int height, int width, List<Person> Society, int totalHijacked, int thiefman, int totalArrested)
         {
             char[,] map = new char[height, width];
             foreach (Person person in Society)  //loops through the whole matrix and sets vharacter values to different Person object
@@ -51,18 +51,19 @@ namespace MyCityVersion2
                 else if (person is Thief) map[person.Personx, person.Persony] = 'T';
                 else if (person is Citizen) map[person.Personx, person.Persony] = 'M';
             }
+            Console.Clear();
 
             for (int i = 0; i < height; i++)    //prints the city
             {
                 for (int j = 0; j < width; j++)
                 {
-                    Console.Write(map[i, j] == '\0' ? '-' : map[i, j]);
-
+                    Console.Write(map[i, j] == '\0' ? '.' : map[i, j]);
                 }                
                 Console.WriteLine();                
             }
-            Thread.Sleep(200); 
-            Console.Clear();
+            Console.WriteLine("Number of hijacked citizens: " + totalHijacked);
+            Console.WriteLine("Number of arrested thieves is: " + totalArrested);            
+            Thread.Sleep(150);
         }
     }
 }
