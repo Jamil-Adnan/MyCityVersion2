@@ -8,24 +8,24 @@ namespace MyCityVersion2
     {
         static int height = 25;
         static int width = 100;
-        static int policeman = 25;
-        static int thiefman = 35;
-        static int citizenman = 50;
+        static int policeman = 20;
+        static int thiefman = 25;
+        static int citizenman = 30;
         static int totalHijacked = 0;
         static int totalArrested = 0;               
         static List<Person> peopleList = new List<Person>();
         static void Main(string[] args)
         {
-            List<Person> Society = City.AddPerson(policeman, thiefman, citizenman, peopleList);  // method to add different class of pople and add them in the matrix as a list.
-            while (totalArrested != thiefman)
+            List<Person> Society = City.AddPerson(policeman, thiefman, citizenman, peopleList);  // method to add different classes of pople and add them in the matrix as a list.
+            while (totalArrested != thiefman)   //as soon as the number of thieves and the number of arrested thieves are equal, the loop breaks
             {
                 foreach (Person person in Society)
                 {
-                    person.PersonMove(width, height);   
+                    person.PersonMove(width, height);   //uses the class method to move every instance of person in list
                 }
                 Meeting(Society);       // Method to control the interactions
-                City.DisplayCity(height, width, Society, totalHijacked, thiefman, totalArrested);
-                Thread.Sleep(500);
+                City.DisplayCity(height, width, Society, totalHijacked, thiefman, totalArrested);   //revokes class method
+                Thread.Sleep(200);
             }
             Console.WriteLine();
         }

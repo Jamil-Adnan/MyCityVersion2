@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 
 namespace MyCityVersion2
 {
-    public class Person
+    internal class Person
     {
         public int Personx { get; set; }
         public int Persony { get; set; }
         public int Xdirection { get; set; }
         public int Ydirection { get; set; }
         public List<string> Inventory { get; set; }
-        public Person(int xdirection, int ydirection, int personx, int persony)     //declaring an object in person class
+        public Person(int xdirection, int ydirection, int personx, int persony)     //constructor
         {
             Personx = personx;
             Persony = persony;
             Xdirection = xdirection;
-            Ydirection = ydirection;
-            //Inventory = Goods.GoodsList();
+            Ydirection = ydirection;            
             SetDirection();
         }
         public void PersonMove(int height, int width)       //method for person movement
@@ -91,11 +90,7 @@ namespace MyCityVersion2
                 Console.WriteLine($"Breaking News!!!   Gotham City Police just arrested a thief and recovered: {string.Join(", ", RecoveredGoods)} ");
                 totalArrested++;
                 Thread.Sleep(2000);
-            }
-            else 
-            {
-               //Console.WriteLine();               
-            }
+            } 
             return totalArrested;
         }
     }
